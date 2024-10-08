@@ -1,9 +1,11 @@
 /// <reference types="cypress" />
 
 
+const navbarText = Cypress.env('navText');
+
 context('Files', () => {
   beforeEach(() => {
-    cy.visit("https://example.cypress.io/commands/actions");
+    cy.visit("/commands/actions");
 
   })
 
@@ -25,9 +27,28 @@ context('Files', () => {
     cy.get(".container").eq(2).within(()=>{
       cy.get('h4').should('exist');
       cy.get('p').should('exist');
-
+      
     }); //within to get multiple elements under a section
   });
 
+  it("validate navbar text",()=>{
+    cy.findByText(navbarText).should('exist')
+  })
 
+  it("cypress async nature",()=>{
+
+    cy.findAllByPlaceholderText('Email').type('test@mail.com')
+   
+    console.log('test is finished : js log')
+    cy.log('test is over : cy log')
+  })
+
+  it("cypress async nature : controlling with then",()=>{
+
+    cy.findAllByPlaceholderText('Email').type('test@mail.com')
+    cy.then(()=>{
+      console.log("test is finished")
+    })
+    
+  })
 })
